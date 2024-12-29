@@ -3,6 +3,7 @@
 
 class cpu {
 public:
+  void cycle();
   /* CPU instructions */
   void ADC(uint8_t addr_mode);
   void AND(uint8_t addr_mode);
@@ -77,4 +78,8 @@ private:
   // Flags register
   // NV_BDIZC
   uint8_t flags;
+
+  // CPU bus to interface with other devices
+  // Has read and write methods
+  bus cpu_bus;
 };
