@@ -1,9 +1,38 @@
 #include "bus.h"
-#include "device.h"
 
 class cpu {
 public:
+  // Accumulator
+  uint8_t acc;
+
+  // Index registers
+  uint8_t y_reg;
+  uint8_t x_reg;
+
+  // Program counter and stack pointer
+  uint16_t pc;
+  uint8_t stack_ptr;
+
+  // Flags register
+  // NV_BDIZC
+  uint8_t flags;
+
+  // Hardware interrupts 
+  uint8_t NMI;
+  uint8_t IRQ;
+  
+  // Pointer to the system bus 
+  bus* system_bus;
+
+  // CPU utilities 
+  uint8_t cpu_read(uint16_t addr);
+  void cpu_write(uint16_t addr, uint8_t val);
+  void handle_interrupts();
+  void increment_pc();
+  void get_pc();
+  void set_pc(uint16_t addr);
   void cycle();
+
   /* CPU instructions */
   void ADC(uint8_t addr_mode);
   void AND(uint8_t addr_mode);
@@ -62,24 +91,4 @@ public:
   void TXA();
   void TXS();
   void TYA();
-
-private:
-  // Accumulator
-  uint8_t acc;
-
-  // Index registers
-  uint8_t y_reg;
-  uint8_t x_reg;
-
-  // Program counter and stack pointer
-  uint16_t pc;
-  uint8_t stack_ptr;
-
-  // Flags register
-  // NV_BDIZC
-  uint8_t flags;
-
-  // CPU bus to interface with other devices
-  // Has read and write methods
-  bus cpu_bus;
 };
