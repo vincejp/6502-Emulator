@@ -1,8 +1,9 @@
+#ifndef CPU_H
+#define CPU_H
 #include "bus.h"
 
 class cpu {
-public:
-  // Accumulator
+    // Accumulator
   uint8_t acc;
 
   // Index registers
@@ -17,14 +18,18 @@ public:
   // NV_BDIZC
   uint8_t flags;
 
-  // Hardware interrupts 
+  // Hardware interrupts
   uint8_t NMI;
   uint8_t IRQ;
-  
-  // Pointer to the system bus 
-  bus* system_bus;
 
-  // CPU utilities 
+  // Pointer to the system bus
+  bus *system_bus;
+public:
+
+  // Constructor will connect to the system bus through a pointer
+  cpu(bus *system_bus);
+
+  // CPU utilities
   uint8_t cpu_read(uint16_t addr);
   void cpu_write(uint16_t addr, uint8_t val);
   void handle_interrupts();
@@ -92,3 +97,5 @@ public:
   void TXS();
   void TYA();
 };
+
+#endif
